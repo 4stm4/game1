@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <title>Document</title>
+</head>
+<body>
+        <div class="flex-container">
+                <div class="header"><h1>Рейтинг</h1></div>
+            </div>
+    <div class="flex-container">
+        
+    {% for item in rating %}
+        <div class="rating">
+            <h1>Место: {{item["num"]}}</h1>
+        <div class="img-rating" style="background-image: url({{item["foto"] }})">
+            </div>
+            <h1>Очки:</h1>
+            <h1>{{item["rslt"]}} </h1>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

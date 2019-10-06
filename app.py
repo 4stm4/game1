@@ -1,4 +1,4 @@
-import datetime, json, sqlite3, pysnooper
+import datetime, json, sqlite3, cv2, pysnooper
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 
@@ -11,7 +11,12 @@ scheduler.start()
 view_history   = "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5"
 insert_history = "INSERT INTO history (name, 'result', photo) VALUES (?,?,?)"
 
-
+def do_photo():
+    cap = cv2.VideoCapture(0) # Включаем первую камеру
+    for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+    ret, frame = cap.read() # Делаем снимок   
+    cv2.imwrite('cam.png', frame) # Записываем в файл
+    cap.release() # Отключаем камеру
 
 def ins_game_hist(id, status, uptime):
     cur = cnn.cursor()
@@ -43,8 +48,8 @@ def index():
 
 @app.route('/start')
 def game():
+    do_photo()
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8000, debug=True)

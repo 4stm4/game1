@@ -1,5 +1,6 @@
 import datetime, json, sqlite3, cv2, pysnooper
 from flask import Flask, render_template
+from pygame import mixer 
 from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
@@ -12,11 +13,17 @@ view_history   = "SELECT name, result, photo  FROM history ORDER BY result DESC 
 insert_history = "INSERT INTO history (name, 'result', photo) VALUES (?,?,?)"
 
 def do_photo():
-    cap = cv2.VideoCapture(0) # Включаем первую камеру
+    cap = cv2.VideoCapture(1) # Включаем первую камеру
     for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
-    ret, frame = cap.read() # Делаем снимок   
+    ret, frame = cap.read() # Делаем снимок 
+    #frame = frame[300, 150] обрезать фото
     cv2.imwrite('cam.png', frame) # Записываем в файл
     cap.release() # Отключаем камеру
+
+def play_music(mp3_file:str):
+    mixer.init()
+    mixer.music.load(mp3_file)
+    mixer.music.play()
 
 def ins_game_hist(id, status, uptime):
     cur = cnn.cursor()
@@ -49,6 +56,7 @@ def index():
 @app.route('/start')
 def game():
     do_photo()
+    play_music('static/music/start_game.mp3')
     return render_template('index.html')
 
 if __name__ == '__main__':

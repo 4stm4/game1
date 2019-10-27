@@ -71,7 +71,7 @@ def index():
         GPIO.add_event_detect(13, GPIO.FALLING, callback=wait_start_button)
     return render_template('history.html', rating = history_list)
 
-def wait_start_button():
+def wait_start_button(channel):
     print('button pressed')
     game()
 

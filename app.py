@@ -50,7 +50,7 @@ def upd_game_hist(result,photo,gamer_id):
     res = cur.execute(query)
     cnn.commit()
 
-@app.route('/')
+@app.route('/game1')
 def index():
     history_list = []
     cur = cnn.cursor()
@@ -67,7 +67,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-        z = Thread(target = wait_start_button())
+        #z = Thread(target = wait_start_button())
         #z.start()
     return render_template('history.html', rating = history_list)
 

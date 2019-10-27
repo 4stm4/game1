@@ -2,15 +2,11 @@ import datetime, json, sqlite3, cv2, time, os, pysnooper
 from flask import Flask, render_template, send_from_directory
 from pygame import mixer
 from threading import Thread
-from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config.from_pyfile('config.ini')
 cnn = sqlite3.connect(app.config['DBASE'], check_same_thread=False, isolation_level = None)
-scheduler = APScheduler()
-scheduler.start()
-cnt = 0
 view_history   = "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5"
 insert_history = "INSERT INTO history (name, 'result', photo) VALUES (?,?,?)"
 

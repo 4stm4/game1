@@ -68,7 +68,7 @@ def index():
             }
         )
         z = Thread(target = wait_start_button())
-        z.start()
+        #z.start()
     return render_template('history.html', rating = history_list)
 
 def wait_start_button():

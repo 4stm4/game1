@@ -62,8 +62,6 @@ def index():
 @app.route('/start')
 @pysnooper.snoop()
 def game():
-    #m = Thread(target = do_photo, args = ('00051.jpeg',))
-    #m.start()
     do_photo('00051.jpeg')
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()

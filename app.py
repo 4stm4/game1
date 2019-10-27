@@ -1,4 +1,5 @@
-import datetime, json, sqlite3, cv2, time, os, pysnooper
+import datetime, sqlite3, cv2, time, os, pysnooper
+import RPi.GPIO as GPIO
 from flask import Flask, render_template, send_from_directory
 from pygame import mixer
 from threading import Thread
@@ -8,8 +9,10 @@ app.config['DEBUG'] = True
 app.config.from_pyfile('config.ini')
 cnn = sqlite3.connect(app.config['DBASE'], check_same_thread=False, isolation_level = None)
 view_history   = "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5"
-insert_history = "INSERT INTO history (name, 'result', photo) VALUES (?,?,?)"
+insert_history = "INSERT INTO history (name, 'result', photo, dt) VALUES (' ', 0, '', ?)"
+update_history = "UPDATE history SET 'result'= {}, photo= '{}' WHERE id= {}"
 
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 @app.route('/photo/<filename>')
 def photo(filename):
@@ -34,13 +37,20 @@ def play_music(mp3_file:str):
     mixer.music.load(mp3_file)
     mixer.music.play()
 
-def ins_game_hist(id, status, uptime):
+def ins_game_hist():
     cur = cnn.cursor()
-    res = cur.execute(insert_history, (id, status, uptime, datetime.datetime.now(),))
+    res = cur.execute(insert_history, (datetime.datetime.now(),))
+    cnn.commit()
+    return cur.lastrowid
+
+def upd_game_hist(result,photo,gamer_id):
+    cur = cnn.cursor()
+    query =update_history.format(result, photo, gamer_id)
+    print(query)
+    res = cur.execute(query)
     cnn.commit()
 
 @app.route('/')
-@pysnooper.snoop()
 def index():
     history_list = []
     cur = cnn.cursor()
@@ -57,16 +67,24 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
+        z = Thread(target = wait_start_button())
+        z.start()
     return render_template('history.html', rating = history_list)
 
+def wait_start_button():
+    while GPIO.input(10) == GPIO.LOW:
+        time.sleep(0.01) 
+    game()
+
 @app.route('/start')
-@pysnooper.snoop()
 def game():
-    do_photo('00051.jpeg')
+    gamer_id = ins_game_hist()
+    photo_name = '{}.jpeg'.format(gamer_id)
+    do_photo(photo_name)
+    upd_game_hist(0, photo_name, gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
-    return render_template('start.html', foto = '/photo/00051.jpeg')
-    
+    return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=80, debug=True)

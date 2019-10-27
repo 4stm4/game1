@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Игра</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="header"><h1>Игра начинается</h1></div>
+    </div>
+<div class="flex-container">
+        <div class="starting">
+                <div class="img-rating" style="background-image: url({{foto}})">
+                </div>
+            </div>
+
+        <div class="starting">
+                <div class="header" id = "sum"><h1>Внимание!!!</h1></div>
+        </div>
+
+
+</div>
+</body>
+<script>
+    var s = 4;
+function count(){
+setInterval(function(){
+  if (s>1){
+  s-=1;}else{s = 'Старт'}
+  document.getElementById("sum").children[0].innerHTML=s;
+},1000)
+}
+    count()    
+</script>
+</html>    

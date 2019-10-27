@@ -73,6 +73,7 @@ def index():
 
 def wait_start_button(channel):
     print('button pressed')
+    GPIO.remove_event_detect(13)
     game()
 
 def game():

@@ -67,8 +67,8 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-        z = Thread(target = wait_start_button())
-        z.start()
+        #z = Thread(target = wait_start_button())
+        #z.start()
     return render_template('history.html', rating = history_list)
 
 def wait_start_button():
@@ -78,6 +78,9 @@ def wait_start_button():
     #game()
 
 @app.route('/start')
+def start():
+    index()
+    
 def game():
     gamer_id = ins_game_hist()
     photo_name = '{}.jpeg'.format(gamer_id)

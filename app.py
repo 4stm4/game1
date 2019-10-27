@@ -13,7 +13,7 @@ insert_history = "INSERT INTO history (name, 'result', photo, dt) VALUES (' ', 0
 update_history = "UPDATE history SET 'result'= {}, photo= '{}' WHERE id= {}"
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.add_event_detect(10, GPIO.FALLING, callback=wait_start_button)
+
 
 @app.route('/photo/<filename>')
 def photo(filename):
@@ -68,8 +68,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-        #z = Thread(target = wait_start_button())
-        #z.start()
+        GPIO.add_event_detect(10, GPIO.FALLING, callback=wait_start_button)
     return render_template('history.html', rating = history_list)
 
 def wait_start_button():

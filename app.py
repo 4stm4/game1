@@ -67,15 +67,15 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-        #z = Thread(target = wait_start_button())
-        #z.start()
+        z = Thread(target = wait_start_button())
+        z.start()
     return render_template('history.html', rating = history_list)
 
 def wait_start_button():
     while GPIO.input(10) == GPIO.LOW:
         time.sleep(0.01) 
     print('button pressed')
-    game()
+    #game()
 
 @app.route('/start')
 def game():

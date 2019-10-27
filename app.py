@@ -13,6 +13,7 @@ insert_history = "INSERT INTO history (name, 'result', photo, dt) VALUES (' ', 0
 update_history = "UPDATE history SET 'result'= {}, photo= '{}' WHERE id= {}"
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(10, GPIO.FALLING, callback=wait_start_button)
 
 @app.route('/photo/<filename>')
 def photo(filename):
@@ -72,15 +73,9 @@ def index():
     return render_template('history.html', rating = history_list)
 
 def wait_start_button():
-    while GPIO.input(10) == GPIO.LOW:
-        time.sleep(0.01) 
     print('button pressed')
-    #game()
+    game()
 
-@app.route('/start')
-def start():
-    index()
-    
 def game():
     gamer_id = ins_game_hist()
     photo_name = '{}.jpeg'.format(gamer_id)

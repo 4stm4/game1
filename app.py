@@ -11,7 +11,7 @@ cnn = sqlite3.connect(app.config['DBASE'], check_same_thread=False, isolation_le
 view_history   = "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5"
 insert_history = "INSERT INTO history (name, 'result', photo, dt) VALUES (' ', 0, '', ?)"
 update_history = "UPDATE history SET 'result'= {}, photo= '{}' WHERE id= {}"
-
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 @app.route('/photo/<filename>')

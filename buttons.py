@@ -21,7 +21,8 @@ start_button = BUTTON(0, 20, 12, 0, True)
 
 @pysnooper.snoop()
 def start_button_work():
-    while not start_button.sensor:
+    print()
+    while not start_button.sensor.is_active:
         start_button.led.blink()
 
 def init_buttons():

@@ -1,7 +1,12 @@
 import gpiozero, pysnooper
+from threading import Thread
+
+
 buttons_specs = [
     [21, 16, 20, False]
 ]
+butttons = []
+start_button = BUTTON(0, 20, 12, 0, True)
 
 class BUTTON(object):
     def __init__(self, number, pin_sensor, pin_led, points : int, start : bool):
@@ -11,10 +16,9 @@ class BUTTON(object):
         self.points_per_click = points
         self.start = start
 
-butttons = []
-start_button = BUTTON(0, 20, 12, 0, True)
 
-@pysnooper.snoop()
 def init_buttons():
     for number in range(1, len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
+        butttons[number].led.on()
+    

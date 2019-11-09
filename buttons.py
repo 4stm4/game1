@@ -19,8 +19,9 @@ start_button = BUTTON(0, 20, 12, 0, True)
 
 @pysnooper.snoop()
 def init_buttons():
-    for number in range(1, len(buttons_specs)+1):
+    for number in range(1, len(buttons_specs)):
         print(number)
         butttons.append(BUTTON(number, *buttons_specs[number]))
+        print('{}'.format(buttons_specs))
         butttons[number].led.on()
     

@@ -36,7 +36,7 @@ def buttons_work():
     while True:
         for i in butttons:
             if i.sensor.is_active:
-                play_music('static/music/start_game.mp3')
+                play_music('static/music/button.mp3')
                 led_off_3sec(i.number)
                 continue
 

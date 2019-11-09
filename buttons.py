@@ -23,5 +23,5 @@ def init_buttons():
         print(number)
         butttons.append(BUTTON(number, *buttons_specs[number-1]))
         print('{}'.format(buttons_specs))
-        butttons[number].led.on()
+        butttons[number-1].led.on()
     

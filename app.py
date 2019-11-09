@@ -37,6 +37,7 @@ def index():
         )
     return render_template('history.html', rating = history_list)
 
+@app.route('/start')
 def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
     photo_name = '{}.jpeg'.format(gamer_id)

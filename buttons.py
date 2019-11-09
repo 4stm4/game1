@@ -25,7 +25,7 @@ def led_off_3sec(led_num):
 
 def start_button_work():
     while True:
-        if start_button.sensor.ispressed:
+        if start_button.sensor.is_active:
             print('start')
 
 @pysnooper.snoop()

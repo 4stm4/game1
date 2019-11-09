@@ -6,7 +6,6 @@ buttons_specs = [
     [21, 16, 20, False]
 ]
 butttons = []
-start_button = BUTTON(0, 20, 12, 0, True)
 
 class BUTTON(object):
     def __init__(self, number, pin_sensor, pin_led, points : int, start : bool):
@@ -16,6 +15,7 @@ class BUTTON(object):
         self.points_per_click = points
         self.start = start
 
+start_button = BUTTON(0, 20, 12, 0, True)
 
 def init_buttons():
     for number in range(1, len(buttons_specs)):

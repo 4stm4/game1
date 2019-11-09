@@ -1,4 +1,4 @@
-import gpiozero, pysnooper
+import gpiozero, pysnooper, time
 from threading import Thread
 
 
@@ -17,11 +17,17 @@ class BUTTON(object):
 
 start_button = BUTTON(0, 20, 12, 0, True)
 
+
+
 @pysnooper.snoop()
+def start_button_work():
+    while not start_button.sensor:
+        start_button.led.blink()
+
 def init_buttons():
     for number in range(1, len(buttons_specs)+1):
         print(number)
         butttons.append(BUTTON(number, *buttons_specs[number-1]))
         print('{}'.format(buttons_specs))
         butttons[number-1].led.on()
-    
+    t = Thread(target=start_button_work)

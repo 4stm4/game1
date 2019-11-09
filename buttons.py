@@ -3,7 +3,7 @@ from threading import Thread
 
 
 buttons_specs = [
-    [21, 16, 20, False]
+    [20, 16, 20, False]
 ]
 butttons = []
 
@@ -15,7 +15,7 @@ class BUTTON(object):
         self.points_per_click = points
         self.start = start
 
-start_button = BUTTON(0, 20, 12, 0, True)
+start_button = BUTTON(0, 21, 12, 0, True)
 
 @pysnooper.snoop()
 def led_off_3sec(led_num):
@@ -27,6 +27,7 @@ def start_button_work():
     while True:
         if start_button.sensor.is_active:
             print('start')
+            break
 
 @pysnooper.snoop()
 def init_buttons():

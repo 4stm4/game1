@@ -1,4 +1,5 @@
 import gpiozero, pysnooper, time, requests
+from utils import do_photo, play_music
 from threading import Thread
 
 
@@ -17,7 +18,6 @@ class BUTTON(object):
 
 start_button = BUTTON(0, 21, 12, 0, True)
 
-@pysnooper.snoop()
 def led_off_3sec(led_num):
     butttons[led_num].led.off()
     time.sleep(3)
@@ -36,6 +36,7 @@ def buttons_work():
     while True:
         for i in butttons:
             if i.sensor.is_active:
+                play_music('static/music/start_game.mp3')
                 led_off_3sec(i.number)
                 continue
 

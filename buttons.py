@@ -32,6 +32,13 @@ def start_button_work():
             time.sleep(1)
             continue
 
+def buttons_work(): 
+    while True:
+        for i in butttons:
+            if i.sensor.is_active:
+                led_off_3sec(i.number)
+                continue
+
 def init_buttons():
     for number in range( len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
@@ -39,3 +46,5 @@ def init_buttons():
     start_button.led.blink()
     t = Thread(target=start_button_work)
     t.start()
+    d = Thread(target=buttons_work)
+    d.start()

@@ -1,7 +1,6 @@
-import gpiozero
-button_specs = [
-    [20, 12, 20, False],
-    [21, 16,  0, True]
+import gpiozero, pysnooper
+buttons_specs = [
+    [21, 16, 20, False]
 ]
 
 class BUTTON(object):
@@ -13,6 +12,9 @@ class BUTTON(object):
         self.start = start
 
 butttons = []
+start_button = BUTTON(0, 20, 12, 0, True)
 
-for number in range(0, len(button_specs)-1):
-    butttons.append(BUTTON(number, *button_specs[number]))
+@pysnooper.snoop()
+def init_buttons():
+    for number in range(1, len(buttons_specs)):
+        butttons.append(BUTTON(number, *buttons_specs[number]))

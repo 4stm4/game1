@@ -2,11 +2,14 @@ import cv2, time, os, pysnooper, datetime
 from db import SQL
 from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
+from buttons import butttons, init_buttons, start_button
 from threading import Thread
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config.from_pyfile('config.ini')
+buttons_cnt = 0
+game_phase = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
 
 
 @app.route('/photo/<filename>')
@@ -34,7 +37,7 @@ def index():
         )
     return render_template('history.html', rating = history_list)
 
-def game():
+def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
     photo_name = '{}.jpeg'.format(gamer_id)
     do_photo(photo_name, app.root_path)
@@ -44,4 +47,6 @@ def game():
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 if __name__ == '__main__':
+    init_buttons()
+    buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)

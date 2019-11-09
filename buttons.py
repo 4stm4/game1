@@ -11,6 +11,7 @@ class BUTTON(object):
     def __init__(self, number, pin_sensor, pin_led, points : int, start : bool):
         self.number = number
         self.sensor = gpiozero.Button(pin_sensor)
+        self.sensor.pull_up = False
         self.led = gpiozero.LED(pin_led)
         self.points_per_click = points
         self.start = start
@@ -25,9 +26,8 @@ def led_off_3sec(led_num):
 
 def start_button_work():
     while True:
-        if start_button.sensor.is_active:
+        if start_button.sensor.ispressed:
             print('start')
-
 
 @pysnooper.snoop()
 def init_buttons():

@@ -32,7 +32,6 @@ def start_button_work():
             time.sleep(1)
             continue
 
-@pysnooper.snoop()
 def init_buttons():
     for number in range( len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))

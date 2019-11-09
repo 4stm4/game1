@@ -1,4 +1,4 @@
-import gpiozero, pysnooper, time, request
+import gpiozero, pysnooper, time, requests
 from threading import Thread
 
 
@@ -22,7 +22,7 @@ start_button = BUTTON(0, 20, 12, 0, True)
 @pysnooper.snoop()
 def start_button_work():
     start_button.led.blink()
-    start_button.sensor.when_pressed = request.GET('127.0.0.1/start')
+    start_button.sensor.when_pressed = requests.get('127.0.0.1/start')
 
 def init_buttons():
     for number in range(1, len(buttons_specs)+1):

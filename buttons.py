@@ -30,3 +30,4 @@ def init_buttons():
         butttons[number].led.on()
         butttons[number].sensor.when_pressed = led_off_3sec(number)
     start_button.led.blink()
+    start_button.sensor.when_activated = print('1')

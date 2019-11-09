@@ -23,11 +23,17 @@ def led_off_3sec(led_num):
     time.sleep(3)
     butttons[led_num].led.on()
 
+def start_button_work():
+    while True:
+        if start_button.sensor.is_active:
+            print('start')
+
+
 @pysnooper.snoop()
 def init_buttons():
     for number in range( len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
         butttons[number].led.on()
-        butttons[number].sensor.when_pressed = led_off_3sec(number)
     start_button.led.blink()
-    start_button.sensor.when_activated = print('1')
+    t = Thread(target=start_button_work)
+    t.start()

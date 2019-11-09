@@ -17,6 +17,7 @@ class BUTTON(object):
 
 start_button = BUTTON(0, 20, 12, 0, True)
 
+@pysnooper.snoop()
 def init_buttons():
     for number in range(1, len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))

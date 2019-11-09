@@ -28,5 +28,4 @@ def init_buttons():
     for number in range(1, len(buttons_specs)+1):
         butttons.append(BUTTON(number, *buttons_specs[number-1]))
         butttons[number-1].led.on()
-    t = Thread(target=start_button_work)
-    t.start()
+    start_button.led.blink()

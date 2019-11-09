@@ -17,11 +17,13 @@ class BUTTON(object):
 
 start_button = BUTTON(0, 20, 12, 0, True)
 
+@pysnooper.snoop()
 def led_off_3sec(led_num):
     butttons[led_num].led.off()
     time.sleep(3)
     butttons[led_num].led.on()
 
+@pysnooper.snoop()
 def init_buttons():
     for number in range( len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))

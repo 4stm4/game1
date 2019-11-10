@@ -69,6 +69,7 @@ def start_game():
 def start_button_work():
     cnt = 0 
     while True:
+        time.sleep(0.1)
         if start_button.sensor.is_active:
             if cnt<1:
                 cnt += 1

@@ -69,7 +69,7 @@ def start_game():
 def start_button_work():
     cnt = 0 
     while True:
-        time.sleep(0.1)
+        time.sleep(0.2)
         if start_button.sensor.is_active:
             if cnt<1:
                 cnt += 1
@@ -79,6 +79,7 @@ def start_button_work():
 
 def buttons_work(): 
     while True:
+        time.sleep(0.2)
         for i in butttons:
             if i.sensor.is_active:
                 play_music('static/music/button.mp3')

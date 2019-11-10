@@ -2,7 +2,7 @@ import cv2, time, os, pysnooper, datetime, pygame
 from pygame import camera
 from db import SQL
 from pygame import mixer
-from flask import Flask, render_template, send_from_directory, redirect
+from flask import Flask, render_template, send_from_directory, redirect, url_for
 from buttons import butttons, start_button, buttons_specs, BUTTON
 from threading import Thread
 
@@ -36,7 +36,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-    start_button.sensor._when_activated = redirect('start')
+    start_button.sensor._when_activated = redirect(url_for('start'))
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):

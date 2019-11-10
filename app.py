@@ -74,8 +74,7 @@ def start_button_work():
             if cnt<1:
                 cnt += 1
                 print('start {}'.format(cnt))
-                with app.app_context:
-                    return start_game()
+                return start_game()
                 break
 
 def buttons_work(): 

@@ -8,11 +8,13 @@ queries = {
 'update_history' : "UPDATE history SET 'result'= %s, photo= '%s' WHERE id= %s"
 }
 
+
 def SQL(action:str, query_name:str, *args):
     if args:
         query = queries[query_name] % args[0]
     else:
         query = queries[query_name]
+    print(query)
     try:
         cur = cnn.cursor()
         res = cur.execute(query)

@@ -74,7 +74,7 @@ def start_button_work():
             if cnt<1:
                 cnt += 1
                 print('start {}'.format(cnt))
-                redirect('http://127.0.0.1/start', code=302)
+                return redirect('http://127.0.0.1/start', code=302)
                 break
 
 def buttons_work(): 

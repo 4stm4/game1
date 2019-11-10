@@ -1,4 +1,4 @@
-import sqlite3, datetime
+import sqlite3, datetime, pysnooper
 from config import file_db
 
 cnn = sqlite3.connect(file_db, check_same_thread=False, isolation_level = None)
@@ -8,7 +8,7 @@ queries = {
 'update_history' : "UPDATE history SET 'result'= %s, photo= '%s' WHERE id= %s"
 }
 
-
+@pysnooper.snoop()
 def SQL(action:str, query_name:str, *args):
     if args:
         query = queries[query_name] % args[0]

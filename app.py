@@ -63,8 +63,7 @@ def start_game():
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
-    with app.app_context():
-        return render_template('start.html', foto = '/photo/{}'.format(photo_name))
+    return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 @pysnooper.snoop()
 def start_button_work():
@@ -74,7 +73,8 @@ def start_button_work():
             if cnt<1:
                 cnt += 1
                 print('start {}'.format(cnt))
-                return redirect('http://127.0.0.1/start')
+                with app.app_context():
+                    return redirect('http://127.0.0.1/start')
                 break
 
 def buttons_work(): 
@@ -85,7 +85,6 @@ def buttons_work():
                 butttons[i.number].led.off()
                 time.sleep(3)
                 butttons[i.number].led.on()
-
                 continue
 
 if __name__ == '__main__':

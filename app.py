@@ -64,7 +64,8 @@ def start_game():
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
-    return render_template('start.html', foto = '/photo/{}'.format(photo_name))
+    with app.app_context():
+        return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 def start_button_work():
     cnt = 0 

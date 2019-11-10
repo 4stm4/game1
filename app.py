@@ -2,7 +2,7 @@ import cv2, time, os, pysnooper, datetime
 from db import SQL
 from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
-from buttons import butttons, init_buttons, start_button
+from buttons import butttons, init_buttons, start_button, buttons_specs, BUTTON
 from threading import Thread
 
 app = Flask(__name__)
@@ -47,7 +47,35 @@ def start_game():
     t.start()
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
+def start_button_work():
+    cnt = 0 
+    while True:
+        if start_button.sensor.is_active:
+            cnt += 1
+            print('start {}'.format(cnt))
+            start_game()
+            time.sleep(1)
+            continue
+
+def buttons_work(): 
+    while True:
+        for i in butttons:
+            if i.sensor.is_active:
+                play_music('static/music/button.mp3')
+                butttons[i.number].led.off()
+                time.sleep(3)
+                butttons[i.number].led.on()
+
+                continue
+
 if __name__ == '__main__':
-    init_buttons()
+    for number in range( len(buttons_specs)):
+        butttons.append(BUTTON(number, *buttons_specs[number]))
+        butttons[number].led.on()
+    start_button.led.blink()
+    t = Thread(target=start_button_work)
+    t.start()
+    d = Thread(target=buttons_work)
+    d.start()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)

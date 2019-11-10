@@ -42,13 +42,13 @@ def index():
 def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
     photo_name = '{}.png'.format(gamer_id)
-    #do_photo(photo_name, app.root_path)
-    pygame.camera.init()
-    pygame.camera.list_cameras() #Camera detected or not
-    cam = pygame.camera.Camera("/dev/video0",(640,480))
-    cam.start()
-    img = cam.get_image()
-    pygame.image.save(img,photo_name)
+    do_photo(photo_name, app.root_path)
+    #pygame.camera.init()
+    #pygame.camera.list_cameras() #Camera detected or not
+    #cam = pygame.camera.Camera("/dev/video0",(640,480))
+    #cam.start()
+    #img = cam.get_image()
+    #pygame.image.save(img,photo_name)
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()

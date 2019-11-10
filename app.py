@@ -7,9 +7,8 @@ from buttons import butttons, start_button, buttons_specs, BUTTON
 from threading import Thread
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
+#app.config['DEBUG'] = True
 app.config.from_pyfile('config.ini')
-buttons_cnt = 0
 game_phase = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
 
 

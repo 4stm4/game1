@@ -77,7 +77,7 @@ def start_button_work():
                 cnt += 1
                 print('start {}'.format(cnt))
                 start_game()
-            return ''
+                break
 
 def buttons_work(): 
     while True:

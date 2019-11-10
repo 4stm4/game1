@@ -1,6 +1,7 @@
 import gpiozero, pysnooper, time, requests
 from utils import do_photo, play_music
 from threading import Thread
+import subprocess
 
 
 buttons_specs = [
@@ -29,7 +30,7 @@ def start_button_work():
         if start_button.sensor.is_active:
             cnt += 1
             print('start {}'.format(cnt))
-            exec('http://127.0.0.1/start')
+            subprocess.call("epiphany-browser http://127.0.0.1", shell=True)
             time.sleep(1)
             continue
 

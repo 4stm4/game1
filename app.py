@@ -1,4 +1,4 @@
-import cv2, time, os, pysnooper, datetime
+import cv2, time, os, pysnooper, datetime, subprocess
 from db import SQL
 from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
@@ -51,3 +51,4 @@ if __name__ == '__main__':
     init_buttons()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)
+    subprocess.call("chromium-browser --no-sandbox http://127.0.0.1/game1", shell=True)

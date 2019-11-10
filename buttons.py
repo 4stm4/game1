@@ -51,4 +51,3 @@ def init_buttons():
     t.start()
     d = Thread(target=buttons_work)
     d.start()
-    subprocess.call("chromium-browser --no-sandbox http://127.0.0.1/game1", shell=True)

@@ -29,6 +29,7 @@ def start_button_work():
         if start_button.sensor.is_active:
             cnt += 1
             print('start {}'.format(cnt))
+            exec('http://127.0.0.1/start')
             time.sleep(1)
             continue
 

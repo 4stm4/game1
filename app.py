@@ -65,7 +65,10 @@ def start_game():
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
-@pysnooper.snoop()
+@app.route('/get_game_phase', methods=['POST'])
+def get_game_phase():
+    return game_phase
+
 def start_button_work():
     cnt = 0 
     while True:

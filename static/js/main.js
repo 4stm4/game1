@@ -34,3 +34,16 @@ function Sound(source, volume, loop)
         this.loop = loop;
     }
 }
+
+function get_game_phase() {
+    $.ajax({
+        type: "POST",
+        url: "/get_game_phase",
+        success: function(data) {
+            alert(data);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}

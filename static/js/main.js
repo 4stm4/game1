@@ -35,7 +35,7 @@ function Sound(source, volume, loop)
     }
 }
 
-function get_game_phase() {
+function GetGamePhase() {
     $.ajax({
         type: "POST",
         url: "/get_game_phase",

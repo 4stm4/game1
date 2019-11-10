@@ -67,18 +67,17 @@ def start_game():
 
 @app.route('/get_game_phase', methods=['POST'])
 def get_game_phase():
-    print(str(game_phase))
+    print('--------------{}'.format(game_phase))
     return str(game_phase)
 
+@pysnooper.snoop()
 def start_button_work():
-    cnt = 0 
+    global game_phase
     while True:
         time.sleep(0.2)
         if start_button.sensor.is_active:
-            if cnt<1:
-                cnt += 1
-                game_phase = 1
-                break
+            game_phase = 1
+            break
 
 def buttons_work(): 
     while True:

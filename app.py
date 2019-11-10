@@ -36,7 +36,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-    start_button.then_pressed = start_game
+    start_button.sensor.then_pressed = start_game
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):

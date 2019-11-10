@@ -39,11 +39,8 @@ function GetGamePhase() {
     $.ajax({
         type: "POST",
         url: "/get_game_phase",
-        success: function(data) {
-            alert(data);
-        },
-        error: function(error) {
-            console.log(error);
+        success: function(result) {
+            alert(result);
         }
     });
 }

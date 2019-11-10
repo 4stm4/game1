@@ -37,7 +37,6 @@ def index():
             }
         )
     #start_button.sensor._when_activated = 
-    redirect('http://127.0.0.1/start', code=302)
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):
@@ -75,7 +74,7 @@ def start_button_work():
             if cnt<1:
                 cnt += 1
                 print('start {}'.format(cnt))
-                start_game()
+                redirect('http://127.0.0.1/start', code=302)
                 break
 
 def buttons_work(): 
@@ -94,8 +93,8 @@ if __name__ == '__main__':
         butttons.append(BUTTON(number, *buttons_specs[number]))
         butttons[number].led.on()
     start_button.led.blink()
-    #st_work = Thread(target=start_button_work)
-    #st_work.start()
+    st_work = Thread(target=start_button_work)
+    st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
     buttons_cnt = len(butttons)

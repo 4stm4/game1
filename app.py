@@ -42,7 +42,7 @@ def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
     photo_name = '{}.jpeg'.format(gamer_id)
     do_photo(photo_name, app.root_path)
-    SQL('update', 'update_history',(0, photo_name, gamer_id, datetime.datetime.now(),))
+    SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))

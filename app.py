@@ -67,6 +67,7 @@ def start_game():
     with app.app_context():
         return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
+@pysnooper.snoop()
 def start_button_work():
     cnt = 0 
     while True:

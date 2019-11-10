@@ -36,7 +36,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-    start_button.sensor._when_activated = redirect(url_for('start'))
+    start_button.sensor._when_activated = redirect('http://127.0.0.1/start', code=302)
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):

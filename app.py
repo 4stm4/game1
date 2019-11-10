@@ -36,6 +36,7 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
+    start_button.then_pressed = start_game
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):
@@ -95,9 +96,9 @@ if __name__ == '__main__':
         butttons.append(BUTTON(number, *buttons_specs[number]))
         butttons[number].led.on()
     start_button.led.blink()
-    t = Thread(target=start_button_work)
-    t.start()
-    d = Thread(target=buttons_work)
-    d.start()
+    #st_work = Thread(target=start_button_work)
+    #st_work.start()
+    ob_work = Thread(target=buttons_work)
+    ob_work.start()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)

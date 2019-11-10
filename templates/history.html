@@ -32,7 +32,7 @@
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script>
     var foo = new Sound("../music/music.mp3", 100, true);
+    var timer = setInterval( GetGamePhase, 1000);
     foo.start();
-    GetGamePhase();
 </script>
 </html>

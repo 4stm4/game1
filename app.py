@@ -2,7 +2,7 @@ import cv2, time, os, pysnooper, datetime
 from db import SQL
 from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
-from buttons import butttons, init_buttons, start_button, buttons_specs, BUTTON
+from buttons import butttons, start_button, buttons_specs, BUTTON
 from threading import Thread
 
 app = Flask(__name__)

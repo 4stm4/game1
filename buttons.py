@@ -30,7 +30,7 @@ def start_button_work():
         if start_button.sensor.is_active:
             cnt += 1
             print('start {}'.format(cnt))
-            subprocess.call("epiphany-browser http://127.0.0.1", shell=True)
+            subprocess.call("chromium-browser http://127.0.0.1/start", shell=True)
             time.sleep(1)
             continue
 
@@ -51,3 +51,4 @@ def init_buttons():
     t.start()
     d = Thread(target=buttons_work)
     d.start()
+    subprocess.call("chromium-browser http://127.0.0.1/game1", shell=True)

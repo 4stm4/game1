@@ -41,7 +41,7 @@ def index():
 @app.route('/start')
 def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
-    photo_name = '{}.jpeg'.format(gamer_id)
+    photo_name = '{}.png'.format(gamer_id)
     #do_photo(photo_name, app.root_path)
     pygame.camera.init()
     pygame.camera.list_cameras() #Camera detected or not

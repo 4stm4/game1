@@ -59,10 +59,10 @@ def play_music(mp3_file:str):
 def start_game():
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
-    do_photo(photo_name, app.root_path)
-    SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
+    do_photo(photo_name, app.root_path)
+    SQL('update', 'update_history',(0, photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 @pysnooper.snoop()

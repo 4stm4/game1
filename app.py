@@ -74,7 +74,8 @@ def start_button_work():
             if cnt<1:
                 cnt += 1
                 print('start {}'.format(cnt))
-                return redirect('http://127.0.0.1/start')
+                with app.app_context:
+                    return start_game()
                 break
 
 def buttons_work(): 

@@ -40,7 +40,7 @@ def index():
 
 @app.route('/start')
 def start_game():
-    gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
+    gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     do_photo(photo_name, app.root_path)
     #pygame.camera.init()

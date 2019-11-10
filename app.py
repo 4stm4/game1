@@ -3,6 +3,7 @@ from db import SQL
 from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
 from buttons import butttons, init_buttons, start_button
+from selenium import webdriver
 from threading import Thread
 
 app = Flask(__name__)
@@ -51,3 +52,6 @@ if __name__ == '__main__':
     init_buttons()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)
+    driver = webdriver.Chrome()
+    driver.get('http://127.0.0.1/game1')
+    driver.maximize_window()

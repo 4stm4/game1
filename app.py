@@ -67,7 +67,7 @@ def start_game():
 
 @app.route('/get_game_phase', methods=['POST'])
 def get_game_phase():
-    return game_phase
+    return str(game_phase)
 
 def start_button_work():
     cnt = 0 

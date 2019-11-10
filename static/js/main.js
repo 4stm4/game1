@@ -40,7 +40,9 @@ function GetGamePhase() {
         type: "POST",
         url: "/get_game_phase",
         success: function(result) {
-            alert(result);
+            if(result == '1'){
+                document.location.replace("/start");
+            }
         }
     });
 }

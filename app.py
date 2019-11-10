@@ -76,8 +76,7 @@ def start_button_work():
         if start_button.sensor.is_active:
             if cnt<1:
                 cnt += 1
-                print('start {}'.format(cnt))
-                return start_game()
+                game_phase = 1
                 break
 
 def buttons_work(): 

@@ -4,6 +4,7 @@ from utils import do_photo, play_music
 from flask import Flask, render_template, send_from_directory
 from buttons import butttons, start_button, buttons_specs, BUTTON
 from threading import Thread
+from SimpleCV import Image, Camera
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -41,7 +42,10 @@ def index():
 def start_game():
     gamer_id = SQL('insert','insert_history', (datetime.datetime.now(),))
     photo_name = '{}.jpeg'.format(gamer_id)
-    do_photo(photo_name, app.root_path)
+    #do_photo(photo_name, app.root_path)
+    cam = Camera()
+    img = cam.getImage()
+    img.save(photo_name)
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()

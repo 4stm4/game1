@@ -58,9 +58,10 @@ def start_button_work():
     cnt = 0 
     while True:
         if start_button.sensor.is_active:
-            cnt += 1
-            print('start {}'.format(cnt))
-            start_game()
+            if cnt<1:
+                cnt += 1
+                print('start {}'.format(cnt))
+                start_game()
             return ''
 
 def buttons_work(): 

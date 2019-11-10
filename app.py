@@ -22,6 +22,7 @@ def music(filename):
 
 @app.route('/game1')
 def index():
+    game_phase = 0
     history_list = []
     responce = SQL('select_all', 'view_history')
     j = 0
@@ -70,7 +71,6 @@ def get_game_phase():
     print('--------------{}'.format(game_phase))
     return str(game_phase)
 
-@pysnooper.snoop()
 def start_button_work():
     global game_phase
     while True:

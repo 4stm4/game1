@@ -44,7 +44,7 @@ def start_game():
     photo_name = '{}.jpeg'.format(gamer_id)
     #do_photo(photo_name, app.root_path)
     pygame.camera.init()
-    pygame.camera.list_camera() #Camera detected or not
+    pygame.camera.list_cameras() #Camera detected or not
     cam = pygame.camera.Camera("/dev/video0",(640,480))
     cam.start()
     img = cam.get_image()

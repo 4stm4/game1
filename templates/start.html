@@ -36,7 +36,7 @@ setInterval(function(){
   s-=1;}else{s = 'Старт'}
   document.getElementById("sum").children[0].innerHTML=s;
 },1000)
-if (s<1){
+if (s=='Старт'){
     document.location.replace("/game");   
 }
 }

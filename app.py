@@ -1,10 +1,10 @@
 import cv2, time, os, pysnooper, datetime, pygame
-from pygame import camera
 from db import SQL
 from pygame import mixer
 from flask import Flask, render_template, send_from_directory, redirect, url_for
 from buttons import butttons, start_button, buttons_specs, BUTTON
 from threading import Thread
+from webbrowser import open_new
 
 app = Flask(__name__)
 #app.config['DEBUG'] = True
@@ -22,6 +22,7 @@ def music(filename):
 
 @app.route('/game1')
 def index():
+    global game_phase
     game_phase = 0
     history_list = []
     responce = SQL('select_all', 'view_history')
@@ -101,3 +102,4 @@ if __name__ == '__main__':
     ob_work.start()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)
+    open_new('127.0.0.1/game1')

@@ -20,7 +20,11 @@ def photo(filename):
 def music(filename):
     return send_from_directory(os.path.join(app.root_path, 'static/music'),filename, mimetype='audio')
 
-@app.route('/game1')
+@app.route('/game')
+def game():
+    return render_template('game.html')
+
+@app.route('/')
 def index():
     global game_phase
     game_phase = 0
@@ -102,4 +106,4 @@ if __name__ == '__main__':
     ob_work.start()
     buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)
-    open_new('127.0.0.1/game1')
+    open_new('127.0.0.1')

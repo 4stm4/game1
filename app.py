@@ -75,6 +75,7 @@ def start_game():
     for button in butttons:
         button.led.off()
     start_button.led.off()
+    time.sleep(2)
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
@@ -94,9 +95,10 @@ def start_button_work():
     global game_phase
     while True:
         time.sleep(0.2)
-        if start_button.sensor.is_active:
-            game_phase = 1
-            continue
+        if game_phase == 0:
+            if start_button.sensor.is_active:
+                game_phase = 1
+                continue
 
 def buttons_work(): 
     while True:

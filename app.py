@@ -37,12 +37,12 @@ def index():
     for button in butttons:
         button.led.on()
     start_button.led.blink()
-    history_list = []
-    winners = SQL('select_all', 'view_history')
+    winners_list = []
+    winners = SQL('select_all', 'select_winners')
     j = 0
     for winner in winners:
         j += 1
-        history_list.append(
+        winners_list.append(
             {
                 "num" : j,
                 "name": winner[0],
@@ -50,7 +50,7 @@ def index():
                 "foto": "/static/photo/{}".format(winner[2])
             }
         )
-    return render_template('history.html', rating = history_list)
+    return render_template('history.html', rating = winners_list)
 
 def do_photo(name, path):
     cap = cv2.VideoCapture(0) # Включаем первую камеру

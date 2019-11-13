@@ -13,7 +13,6 @@ def SQL(action:str, query_name:str, *args):
         query = queries[query_name] % args[0]
     else:
         query = queries[query_name]
-    print(query)
     try:
         cur = cnn.cursor()
         res = cur.execute(query)
@@ -28,4 +27,5 @@ def SQL(action:str, query_name:str, *args):
         return cur.lastrowid
     if action in ('update'):
         cnn.commit()
+    cnn.close()
     return res

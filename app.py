@@ -96,7 +96,7 @@ def start_button_work():
         time.sleep(0.2)
         if start_button.sensor.is_active:
             game_phase = 1
-            break
+            continue
 
 def buttons_work(): 
     while True:

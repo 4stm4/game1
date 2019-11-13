@@ -38,16 +38,16 @@ def index():
         button.led.on()
     start_button.led.blink()
     history_list = []
-    responce = SQL('select_all', 'view_history')
+    winners = SQL('select_all', 'view_history')
     j = 0
-    for i in responce:
+    for winner in winners:
         j += 1
         history_list.append(
             {
                 "num" : j,
-                "name": i[0],
-                "rslt": i[1],
-                "foto": "/static/photo/{}".format(i[2])
+                "name": winner[0],
+                "rslt": winner[1],
+                "foto": "/static/photo/{}".format(winner[2])
             }
         )
     return render_template('history.html', rating = history_list)

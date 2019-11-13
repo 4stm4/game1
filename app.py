@@ -10,6 +10,7 @@ app = Flask(__name__)
 #app.config['DEBUG'] = True
 app.config.from_pyfile('config.ini')
 game_phase = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
+active_button = -1
 
 
 @app.route('/photo/<filename>')
@@ -22,12 +23,18 @@ def music(filename):
 
 @app.route('/game')
 def game():
+    for button in butttons:
+        button.led.off()
+    start_button.led.off()
     return render_template('game.html')
 
 @app.route('/')
 def index():
     global game_phase
     game_phase = 0
+    for button in butttons:
+        button.led.on()
+    start_button.led.blink()
     history_list = []
     responce = SQL('select_all', 'view_history')
     j = 0
@@ -41,7 +48,6 @@ def index():
                 "foto": "/static/photo/{}".format(i[2])
             }
         )
-    #start_button.sensor._when_activated = 
     return render_template('history.html', rating = history_list)
 
 def do_photo(name, path):
@@ -61,19 +67,23 @@ def play_music(mp3_file:str):
 
 
 @app.route('/start')
-@pysnooper.snoop()
 def start_game():
+    for button in butttons:
+        button.led.off()
+    start_button.ledoff()
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
     do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
+    for button in butttons:
+        button.led.on()
+    start_button.led.on()
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 @app.route('/get_game_phase', methods=['POST'])
 def get_game_phase():
-    print('--------------{}'.format(game_phase))
     return str(game_phase)
 
 def start_button_work():
@@ -87,23 +97,24 @@ def start_button_work():
 def buttons_work(): 
     while True:
         time.sleep(0.2)
-        for i in butttons:
-            if i.sensor.is_active:
-                play_music('static/music/button.mp3')
-                butttons[i.number].led.off()
-                time.sleep(3)
-                butttons[i.number].led.on()
-                continue
+        if game_phase == 0:
+            for i in butttons:
+                if i.sensor.is_active:
+                    play_music('static/music/button.mp3')
+                    butttons[i.number].led.off()
+                    time.sleep(3)
+                    butttons[i.number].led.on()
+                    continue
+        else:
+            if game_phase ==2:
+                pass
 
 if __name__ == '__main__':
     for number in range( len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
-        butttons[number].led.on()
-    start_button.led.blink()
     st_work = Thread(target=start_button_work)
     st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
-    buttons_cnt = len(butttons)
     app.run(host='127.0.0.1', port=80, debug=True)
     open_new('127.0.0.1')

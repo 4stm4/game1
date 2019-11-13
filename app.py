@@ -23,6 +23,8 @@ def music(filename):
 
 @app.route('/game')
 def game():
+    global game_phase
+    game_phase = 2
     for button in butttons:
         button.led.off()
     start_button.led.off()
@@ -68,6 +70,8 @@ def play_music(mp3_file:str):
 
 @app.route('/start')
 def start_game():
+    global game_phase
+    game_phase =1
     for button in butttons:
         button.led.off()
     start_button.led.off()

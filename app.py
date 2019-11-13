@@ -22,6 +22,7 @@ def music(filename):
     return send_from_directory(os.path.join(app.root_path, 'static/music'),filename, mimetype='audio')
 
 @app.route('/game')
+@pysnooper.snoop()
 def game():
     global game_phase
     game_phase = 2

@@ -53,13 +53,16 @@ def index():
     return render_template('history.html', rating = winners_list)
 
 def do_photo(name, path):
-    cap = cv2.VideoCapture(0) # Включаем первую камеру
-    for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
-    ret, frame = cap.read() # Делаем снимок 
-    #frame = frame[300, 150] обрезать фото
-    photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
-    cv2.imwrite(photo_file, frame) # Записываем в файл
-    cap.release() # Отключаем камеру
+    try:
+        cap = cv2.VideoCapture(0) # Включаем первую камеру
+        for i in range(10): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+        ret, frame = cap.read() # Делаем снимок 
+        #frame = frame[300, 150] обрезать фото
+        photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
+        cv2.imwrite(photo_file, frame) # Записываем в файл
+        cap.release() # Отключаем камеру
+    except:
+        return ''
     return ''
 
 def play_music(mp3_file:str):
@@ -75,7 +78,7 @@ def start_game():
     for button in butttons:
         button.led.off()
     start_button.led.off()
-    time.sleep(2)
+
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))

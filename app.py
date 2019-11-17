@@ -68,17 +68,17 @@ def index():
 
 def do_photo(name, path):
     try:
-        cap = cv2.VideoCapture(0) # Включаем первую камеру
-        for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
-        ret, frame = cap.read() # Делаем снимок 
+        camera = cv2.VideoCapture(0) # Включаем первую камеру
+        #for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+        ret, frame = camera.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
-        ret = cv2.rotate(ret, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
-        cap.release() # Отключаем камеру
-    except:
-        return ''
+        camera.release() # Отключаем камеру
+    except Exception as e:
+        return 'ERROR = {}'.format(e)
     return ''
 
 def play_music(mp3_file:str):
@@ -98,7 +98,7 @@ def start_game():
     gamer_id -= 1
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
-    #t.start()
+    t.start()
     do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))

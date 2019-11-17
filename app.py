@@ -42,7 +42,7 @@ def game_over():
     for button in butttons:
         button.led.blink()
     start_button.led.blink()
-    return render_template('game_over.html')
+    return render_template('game_over.html', result = game_points)
 
 @app.route('/')
 def index():

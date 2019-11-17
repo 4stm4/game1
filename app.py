@@ -89,7 +89,7 @@ def start_game():
     for button in butttons:
         button.led.off()
     start_button.led.off()
-
+    time.sleep(3)
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))

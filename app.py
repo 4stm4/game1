@@ -91,18 +91,17 @@ def play_music(mp3_file:str):
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id
-    if game_phase == 1:
-        return
-    game_phase =1
-    for button in butttons:
-        button.led.on()
-    start_button.led.on()
-    gamer_id = SQL('insert','insert_history')
-    photo_name = '{}.png'.format(gamer_id)
-    t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
-    t.start()
-    do_photo(photo_name, app.root_path)
-    SQL('update', 'update_history',( photo_name, gamer_id,))
+    if not game_phase == 1:
+        game_phase =1
+        for button in butttons:
+            button.led.on()
+        start_button.led.on()
+        gamer_id = SQL('insert','insert_history')
+        photo_name = '{}.png'.format(gamer_id)
+        t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
+        t.start()
+        do_photo(photo_name, app.root_path)
+        SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))
 
 @app.route('/get_game_phase', methods=['POST'])

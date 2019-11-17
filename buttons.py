@@ -6,7 +6,8 @@ from threading import Thread
 buttons_specs = [
     [20, 16, 20],
     [7, 8, 15],
-    [25,24,10]
+    [25,24,10],
+    [18,15,25]
 ]
 butttons = []
 

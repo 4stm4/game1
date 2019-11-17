@@ -116,6 +116,7 @@ def buttons_work():
             for i in butttons:
                 if i.sensor.is_active:
                     but_action = Thread(target = but_music_blink, args = (i.number,))
+                    but_action.start()
                     continue
         else:
             if game_phase ==2:

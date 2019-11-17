@@ -132,7 +132,7 @@ def buttons_work():
                     continue
         else:
             if game_phase ==2:
-                sel_but = random.randint(1,len(butttons))
+                sel_but = random.randint(0,len(butttons)-1)
                 butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:

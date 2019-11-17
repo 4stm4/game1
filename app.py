@@ -91,7 +91,6 @@ def play_music(mp3_file:str):
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id
-    do_photo(photo_name, app.root_path)
     if game_phase == 1:
         game_phase = 2
         for button in butttons:
@@ -99,6 +98,7 @@ def start_game():
         start_button.led.on()
         gamer_id = SQL('insert','insert_history')
         photo_name = '{}.png'.format(gamer_id)
+        do_photo(photo_name, app.root_path)
         t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
         t.start()
 

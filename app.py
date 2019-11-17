@@ -74,7 +74,8 @@ def do_photo(name, path):
         ret, frame = camera.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
-        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        #cv2.ROTATE_90_COUNTERCLOCKWISE
+        frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
         camera.release() # Отключаем камеру

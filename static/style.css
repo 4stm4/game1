@@ -34,7 +34,7 @@ body{
 .starting {
     letter-spacing: 3px;
     text-align: center;
-    width: calc(94% / 2);
+    width: calc(94% / 4);
     height: calc(90%);
     color: rgb(165, 197, 75);
     margin: 0 auto;

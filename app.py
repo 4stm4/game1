@@ -139,7 +139,12 @@ def buttons_work():
                     continue
         else:
             if game_phase ==2:
-                sel_but = random.randint(0,len(butttons)-1)
+                last_two = []
+                sel_but = -1
+                while True:
+                    sel_but = random.randint(0,len(butttons)-1)
+                    if not sel_but in last_two:
+                        break
                 butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:
@@ -152,6 +157,9 @@ def buttons_work():
                     if time_cnt >29:
                         butttons[sel_but].led.off()
                         break
+                last_two.append(sel_but)
+                if len(last_two)>2:
+                    last_two.pop(0)
 
 if __name__ == '__main__':
     for number in range( len(buttons_specs)):

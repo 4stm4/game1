@@ -125,6 +125,7 @@ def but_music_blink(but_num:int):
         butttons[but_num].led.on()
 
 def buttons_work(): 
+    global game_points
     while True:
         time.sleep(0.2)
         if game_phase == 0:

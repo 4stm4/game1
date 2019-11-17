@@ -147,10 +147,9 @@ def buttons_work():
                     if not sel_but in last_two:
                         break
                 last_two.append(sel_but)
-                print('last_two = {}'.format(last_two))
                 if len(last_two)>2:
                     last_two.pop(0)
-
+                print('last_two = {}'.format(last_two))
                 butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:

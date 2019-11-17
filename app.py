@@ -70,7 +70,7 @@ def index():
 def do_photo(name, path):
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
-        #for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+        #for i in range(5): camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = camera.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
@@ -91,6 +91,7 @@ def play_music(mp3_file:str):
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id
+    do_photo(photo_name, app.root_path)
     if game_phase == 1:
         game_phase = 2
         for button in butttons:
@@ -100,7 +101,7 @@ def start_game():
         photo_name = '{}.png'.format(gamer_id)
         t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
         t.start()
-        do_photo(photo_name, app.root_path)
+
         SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))
 

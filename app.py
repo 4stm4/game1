@@ -12,6 +12,7 @@ app.config.from_pyfile('config.ini')
 game_phase = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
 active_button = -1
 game_points = 0
+gamer_id = -1
 
 
 @app.route('/photo/<filename>')
@@ -33,8 +34,11 @@ def game():
 
 @app.route('/game_over')
 def game_over():
-    global game_phase, game_points
+    global game_phase, game_points, gamer_id
     game_phase = 3
+    SQL('update', 'update_history',(game_points, gamer_id,))
+    gamer_id = -1
+    game_points = 0
     for button in butttons:
         button.led.blink()
     start_button.led.blink()
@@ -84,7 +88,7 @@ def play_music(mp3_file:str):
 
 @app.route('/start')
 def start_game():
-    global game_phase
+    global game_phase, gamer_id
     game_phase =1
     for button in butttons:
         button.led.on()
@@ -94,7 +98,7 @@ def start_game():
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
     do_photo(photo_name, app.root_path)
-    SQL('update', 'update_history',(0, photo_name, gamer_id,))
+    SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 @app.route('/get_game_phase', methods=['POST'])

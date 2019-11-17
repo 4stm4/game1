@@ -3,9 +3,10 @@ from config import file_db
 
 cnn = sqlite3.connect(file_db, check_same_thread=False, isolation_level = None)
 queries = {
-'select_winners'   : "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5",
+'select_winners' : "SELECT name, result, photo  FROM history ORDER BY result DESC LIMIT 5",
 'insert_history' : "INSERT INTO history (name, 'result', photo) VALUES ('', 0, '')",
-'update_history' : "UPDATE history SET 'result'= %s, photo= '%s' WHERE id= %s"
+'update_history' : "UPDATE history SET  photo= '%s' WHERE id= %s",
+'update_points'  : "UPDATE history SET 'result'= %s WHERE id= %s"
 }
 
 def SQL(action:str, query_name:str, *args):

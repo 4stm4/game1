@@ -32,7 +32,6 @@ body{
 }
 
 .starting {
-    padding-left: 100px;
     letter-spacing: 3px;
     text-align: center;
     width: calc(94% / 2);

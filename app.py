@@ -103,6 +103,7 @@ def start_button_work():
             if start_button.sensor.is_active:
                 game_phase = 1
                 continue
+            
 def but_music_blink(but_num:int):
         play_music('static/music/button.mp3')
         butttons[but_num].led.off()

@@ -30,7 +30,7 @@ def game():
     for button in butttons:
         button.led.off()
     start_button.led.off()
-    return render_template('game.html', {'rslt':game_points})
+    return render_template('game.html')
 
 @app.route('/')
 def index():

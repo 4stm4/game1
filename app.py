@@ -127,9 +127,9 @@ def start_button_work():
 
 def buttons_work(): 
     global game_points, game_phase
+    last_two = []
     while True:
         time.sleep(0.2)
-        last_two = []
         if game_phase == 0:
             for i in butttons:
                 if i.sensor.is_active:

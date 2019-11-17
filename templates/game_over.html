@@ -29,14 +29,15 @@
     </div>
 </body>
 <script>
-    var s = 60;
-function count(){
-setInterval(function(){
-  if (s>1){
-  s-=1;}else{s = '0'}
-  document.getElementById("sum").children[0].innerHTML=s;
-},1000)
-}
-    count()    
-</script>
+        var s = 10;
+    function count(){
+    setInterval(function(){
+      if (s>1){
+      s-=1;}else{s = '0'; document.location.replace("/");}
+      document.getElementById("sum").children[0].innerHTML=s;
+    },1000)
+    
+    }
+        count()  
+    </script>
 </html>    

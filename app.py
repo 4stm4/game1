@@ -66,6 +66,7 @@ def index():
         )
     return render_template('history.html', rating = winners_list)
 
+@pysnooper.snoop()
 def do_photo(name, path):
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
@@ -86,7 +87,6 @@ def play_music(mp3_file:str):
     mixer.music.load(mp3_file)
     mixer.music.play()
 
-@pysnooper.snoop()
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id

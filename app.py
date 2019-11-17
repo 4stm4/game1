@@ -129,6 +129,7 @@ def buttons_work():
     global game_points, game_phase
     while True:
         time.sleep(0.2)
+        last_two = []
         if game_phase == 0:
             for i in butttons:
                 if i.sensor.is_active:
@@ -139,10 +140,10 @@ def buttons_work():
                     continue
         else:
             if game_phase ==2:
-                last_two = []
                 sel_but = -1
                 while True:
                     sel_but = random.randint(0,len(butttons)-1)
+                    print('sel_but = {}'.format(sel_but))
                     if not sel_but in last_two:
                         break
                 butttons[sel_but].led.on()

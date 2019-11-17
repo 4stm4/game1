@@ -103,6 +103,11 @@ def start_button_work():
             if start_button.sensor.is_active:
                 game_phase = 1
                 continue
+def but_music_blink(but_num:int):
+        play_music('static/music/button.mp3')
+        butttons[but_num].led.off()
+        time.sleep(3)
+        butttons[but_num].led.on()
 
 def buttons_work(): 
     while True:
@@ -110,10 +115,7 @@ def buttons_work():
         if game_phase == 0:
             for i in butttons:
                 if i.sensor.is_active:
-                    play_music('static/music/button.mp3')
-                    butttons[i.number].led.off()
-                    time.sleep(3)
-                    butttons[i.number].led.on()
+                    but_action = Thread(target = but_music_blink, args = (i.number,))
                     continue
         else:
             if game_phase ==2:

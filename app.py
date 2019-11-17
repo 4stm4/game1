@@ -32,6 +32,16 @@ def game():
     start_button.led.off()
     return render_template('game.html')
 
+@app.route('/game_over')
+@pysnooper.snoop()
+def game():
+    global game_phase, game_points
+    game_phase = 3
+    for button in butttons:
+        button.led.off()
+    start_button.led.off()
+    return render_template('game_over.html')
+
 @app.route('/')
 def index():
     global game_phase, game_points

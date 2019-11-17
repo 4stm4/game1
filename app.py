@@ -117,9 +117,6 @@ def start_button_work():
                 game_phase = 1
                 continue
 
-def but_music_blink(but_num:int):
-
-
 def buttons_work(): 
     global game_points, game_phase
     while True:

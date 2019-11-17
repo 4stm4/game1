@@ -37,7 +37,6 @@ def game_over():
     global game_phase, game_points, gamer_id
     game_phase = 3
     SQL('update', 'update_points',(game_points, gamer_id,))
-    gamer_id = -1
     for button in butttons:
         button.led.blink()
     start_button.led.blink()
@@ -45,9 +44,10 @@ def game_over():
 
 @app.route('/')
 def index():
-    global game_phase, game_points
+    global game_phase, game_points, gamer_id
     game_phase = 0
     game_points = 0
+    gamer_id = -1
     for button in butttons:
         button.led.on()
     start_button.led.blink()
@@ -96,7 +96,7 @@ def start_game():
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
-    do_photo(photo_name, app.root_path)
+    #do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))
 

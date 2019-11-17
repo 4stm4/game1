@@ -68,7 +68,7 @@ def index():
 
 def do_photo(name, path):
     try:
-         # Включаем первую камеру
+        camera = cv2.VideoCapture(0) # Включаем первую камеру
     
         #for i in range(5): camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = camera.read() # Делаем снимок 
@@ -77,7 +77,7 @@ def do_photo(name, path):
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
-        #camera.release() # Отключаем камеру
+        camera.release() # Отключаем камеру
     except Exception as e:
         return 'ERROR = {}'.format(e)
     return ''
@@ -159,6 +159,5 @@ if __name__ == '__main__':
     st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
-    camera = cv2.VideoCapture(0)
     app.run(host='127.0.0.1', port=80, debug=True)
     open_new('127.0.0.1')

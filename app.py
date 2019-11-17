@@ -1,4 +1,4 @@
-import cv2, time, os, datetime, pygame, random
+import cv2, time, os, datetime, pygame, random, pysnooper
 from db import SQL
 from pygame import mixer
 from flask import Flask, render_template, send_from_directory, redirect, url_for
@@ -117,6 +117,7 @@ def start_button_work():
                 game_phase = 1
                 continue
 
+@pysnooper.snoop()
 def buttons_work(): 
     global game_points, game_phase
     while True:

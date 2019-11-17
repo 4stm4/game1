@@ -87,17 +87,14 @@ def start_game():
     global game_phase
     game_phase =1
     for button in butttons:
-        button.led.off()
-    start_button.led.off()
+        button.led.on()
+    start_button.led.on()
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()
     do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',(0, photo_name, gamer_id,))
-    for button in butttons:
-        button.led.on()
-    start_button.led.on()
     return render_template('start.html', foto = '/photo/{}'.format(photo_name))
 
 @app.route('/get_game_phase', methods=['POST'])

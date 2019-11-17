@@ -23,7 +23,6 @@ def music(filename):
     return send_from_directory(os.path.join(app.root_path, 'static/music'),filename, mimetype='audio')
 
 @app.route('/game')
-@pysnooper.snoop()
 def game():
     global game_phase, game_points
     game_phase = 2
@@ -33,8 +32,7 @@ def game():
     return render_template('game.html')
 
 @app.route('/game_over')
-@pysnooper.snoop()
-def game():
+def game_over():
     global game_phase, game_points
     game_phase = 3
     for button in butttons:

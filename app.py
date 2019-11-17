@@ -117,7 +117,6 @@ def start_button_work():
                 game_phase = 1
                 continue
 
-@pysnooper.snoop()
 def buttons_work(): 
     global game_points, game_phase
     while True:
@@ -133,6 +132,7 @@ def buttons_work():
         else:
             if game_phase ==2:
                 sel_but = random.randint(0,len(butttons)-1)
+                print(sel_but)
                 butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:

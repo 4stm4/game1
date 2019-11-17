@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config.ini')
 game_phase = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
 active_button = -1
+game_points = 0
 
 
 @app.route('/photo/<filename>')
@@ -24,17 +25,18 @@ def music(filename):
 @app.route('/game')
 @pysnooper.snoop()
 def game():
-    global game_phase
+    global game_phase, game_points
     game_phase = 2
     for button in butttons:
         button.led.off()
     start_button.led.off()
-    return render_template('game.html')
+    return render_template('game.html', {'rslt':game_points})
 
 @app.route('/')
 def index():
-    global game_phase
+    global game_phase, game_points
     game_phase = 0
+    game_points = 0
     for button in butttons:
         button.led.on()
     start_button.led.blink()
@@ -103,7 +105,7 @@ def start_button_work():
             if start_button.sensor.is_active:
                 game_phase = 1
                 continue
-            
+
 def but_music_blink(but_num:int):
         play_music('static/music/button.mp3')
         butttons[but_num].led.off()

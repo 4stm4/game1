@@ -52,3 +52,14 @@ body{
     background-position: 0px 0px;
     background-size: cover;
 }
+.img-start {
+    text-align: center;
+    border: 3px solid rgb(75, 248, 234);
+    margin: 0 auto;
+    width: 200px;
+    height: 300px;
+    border-radius: 10%;
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    background-size: cover;
+}

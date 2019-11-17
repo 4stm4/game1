@@ -72,6 +72,8 @@ def do_photo(name, path):
         for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = cap.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
+        #cv2.ROTATE_90_CLOCKWISE
+        ret = cv2.rotate(ret, cv2.ROTATE_90_COUNTERCLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
         cap.release() # Отключаем камеру
@@ -95,8 +97,8 @@ def start_game():
     gamer_id = SQL('insert','insert_history')
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
-    t.start()
-    #do_photo(photo_name, app.root_path)
+    #t.start()
+    do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',( photo_name, gamer_id,))
     return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))
 
@@ -135,7 +137,6 @@ def buttons_work():
         else:
             if game_phase ==2:
                 sel_but = random.randint(0,len(butttons)-1)
-                print(sel_but)
                 butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:

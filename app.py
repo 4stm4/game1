@@ -99,10 +99,12 @@ def start_game():
 
 @app.route('/get_game_phase', methods=['POST'])
 def get_game_phase():
+    global game_phase
     return str(game_phase)
 
 @app.route('/get_game_points', methods=['POST'])
 def get_game_points():
+    global game_points
     return str(game_points)
 
 
@@ -122,7 +124,7 @@ def but_music_blink(but_num:int):
         butttons[but_num].led.on()
 
 def buttons_work(): 
-    global game_points
+    global game_points, game_phase
     while True:
         time.sleep(0.2)
         if game_phase == 0:
@@ -139,9 +141,12 @@ def buttons_work():
                 while True:
                     if  butttons[sel_but].sensor.is_active:
                         game_points += butttons[sel_but].points_per_click
+                        butttons[sel_but].led.off()
+                        break
                     time_cnt += 1
                     time.sleep(0.1)
                     if time_cnt >299:
+                        butttons[sel_but].led.off()
                         break
 
 if __name__ == '__main__':

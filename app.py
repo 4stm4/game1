@@ -36,13 +36,12 @@ def game():
 def game_over():
     global game_phase, game_points, gamer_id
     game_phase = 3
-    SQL('update', 'update_history',(game_points, gamer_id,))
+    SQL('update', 'update_points',(game_points, gamer_id,))
     gamer_id = -1
-    game_points = 0
     for button in butttons:
         button.led.blink()
     start_button.led.blink()
-    return render_template('game_over.html', result = game_points)
+    return render_template('game_over.html', points = game_points)
 
 @app.route('/')
 def index():
@@ -146,7 +145,7 @@ def buttons_work():
                         break
                     time_cnt += 1
                     time.sleep(0.1)
-                    if time_cnt >299:
+                    if time_cnt >29:
                         butttons[sel_but].led.off()
                         break
 

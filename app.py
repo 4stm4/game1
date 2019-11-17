@@ -144,6 +144,7 @@ def buttons_work():
                 while True:
                     sel_but = random.randint(0,len(butttons)-1)
                     print('sel_but = {}'.format(sel_but))
+                    print('last_two = {}'.format(last_two))
                     if not sel_but in last_two:
                         break
                 butttons[sel_but].led.on()

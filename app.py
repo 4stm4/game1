@@ -91,6 +91,8 @@ def play_music(mp3_file:str):
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id
+    if game_phase == 1:
+        return
     game_phase =1
     for button in butttons:
         button.led.on()

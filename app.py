@@ -69,7 +69,7 @@ def index():
 def do_photo(name, path):
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
-        time.sleep(0.5)
+    
         #for i in range(5): camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = camera.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото

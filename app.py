@@ -96,7 +96,6 @@ def start_game():
         button.led.on()
     start_button.led.on()
     gamer_id = SQL('insert','insert_history')
-    gamer_id -= 1
     photo_name = '{}.png'.format(gamer_id)
     t = Thread(target=play_music, args = ('static/music/start_game.mp3',))
     t.start()

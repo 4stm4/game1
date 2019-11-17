@@ -1,4 +1,4 @@
-import cv2, time, os, pysnooper, datetime, pygame
+import cv2, time, os, datetime, pygame, random
 from db import SQL
 from pygame import mixer
 from flask import Flask, render_template, send_from_directory, redirect, url_for
@@ -36,8 +36,8 @@ def game_over():
     global game_phase, game_points
     game_phase = 3
     for button in butttons:
-        button.led.off()
-    start_button.led.off()
+        button.led.blink()
+    start_button.led.blink()
     return render_template('game_over.html')
 
 @app.route('/')
@@ -104,6 +104,11 @@ def start_game():
 def get_game_phase():
     return str(game_phase)
 
+@app.route('/get_game_points', methods=['POST'])
+def get_game_points():
+    return str(game_points)
+
+
 def start_button_work():
     global game_phase
     while True:
@@ -130,7 +135,16 @@ def buttons_work():
                     continue
         else:
             if game_phase ==2:
-                pass
+                sel_but = random.randint(1,len(butttons))
+                butttons[sel_but].led.on()
+                time_cnt = 0
+                while True:
+                    if  butttons[sel_but].sensor.is_active:
+                        game_points += butttons[sel_but].points_per_click
+                    time_cnt += 1
+                    time.sleep(0.1)
+                    if time_cnt >299:
+                        break
 
 if __name__ == '__main__':
     for number in range( len(buttons_specs)):

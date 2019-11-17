@@ -86,7 +86,7 @@ def play_music(mp3_file:str):
     mixer.music.load(mp3_file)
     mixer.music.play()
 
-
+@pysnooper.snoop()
 @app.route('/start')
 def start_game():
     global game_phase, gamer_id

@@ -30,7 +30,7 @@ def game():
     for button in butttons:
         button.led.off()
     start_button.led.off()
-    return render_template('game.html')
+    return render_template('game.html', foto = '/photo/{}.png'.format(gamer_id))
 
 @app.route('/game_over')
 def game_over():
@@ -41,7 +41,7 @@ def game_over():
     for button in butttons:
         button.led.blink()
     start_button.led.blink()
-    return render_template('game_over.html', points = game_points)
+    return render_template('game_over.html', points = game_points, foto = '/photo/{}.png'.format(gamer_id))
 
 @app.route('/')
 def index():
@@ -69,7 +69,7 @@ def index():
 def do_photo(name, path):
     try:
         cap = cv2.VideoCapture(0) # Включаем первую камеру
-        for i in range(10): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+        for i in range(30): cap.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = cap.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'),name)
@@ -98,7 +98,7 @@ def start_game():
     t.start()
     do_photo(photo_name, app.root_path)
     SQL('update', 'update_history',( photo_name, gamer_id,))
-    return render_template('start.html', foto = '/photo/{}'.format(photo_name))
+    return render_template('start.html', foto = '/photo/{}.png'.format(gamer_id))
 
 @app.route('/get_game_phase', methods=['POST'])
 def get_game_phase():

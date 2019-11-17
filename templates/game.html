@@ -21,17 +21,19 @@
             </div></center>
         </div>
         <div class="starting">
-            <h1>Очки:</h1>
+            <p class="header">Очки:</p>
             <h1>0</h1>
+            <p class="header">Осталось времени</p>
+            <div class="header" id = "sum"><h1></h1></div>
         </div>
     </div>
 </body>
 <script>
-    var s = 4;
+    var s = 60;
 function count(){
 setInterval(function(){
   if (s>1){
-  s-=1;}else{s = 'Старт'}
+  s-=1;}else{s = '0'}
   document.getElementById("sum").children[0].innerHTML=s;
 },1000)
 }

@@ -5,7 +5,8 @@ from threading import Thread
 # pin_sensor, pin_led, points : int, start
 buttons_specs = [
     [20, 16, 20],
-    [7, 8, 15]
+    [7, 8, 15],
+    [25,24,10]
 ]
 butttons = []
 

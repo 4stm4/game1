@@ -168,5 +168,5 @@ if __name__ == '__main__':
     st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
-    app.run(host='127.0.0.1', port=80, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True)
     open_new('127.0.0.1')

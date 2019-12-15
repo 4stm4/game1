@@ -170,7 +170,7 @@ def buttons_work():
                     butttons[i.number].led.on()
                     continue
         else:
-            if GAME_PHASE ==2:
+            if GAME_PHASE == 2:
                 sel_but = -1
                 while True:
                     sel_but = random.randint(0,len(butttons))
@@ -179,13 +179,13 @@ def buttons_work():
                 last_two.append(sel_but)
                 if len(last_two)>2:
                     last_two.pop(0)
-                if sel_but == start_button_num:
+                if sel_but == 0:
                     start_button.led.on()
                 else:
                     butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:
-                    if sel_but == start_button_num:
+                    if sel_but == 0:
                         if start_button.sensor.is_active:
                             GAME_POINTS += start_button.points_per_click
                             start_button.led.off()

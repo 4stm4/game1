@@ -56,3 +56,10 @@ function GetGamePoints() {
         }
     });
 }
+
+function PostGameEnd() {
+    $.ajax({
+        type: "POST",
+        url: "/end_music"
+    });
+}

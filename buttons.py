@@ -23,4 +23,4 @@ class BUTTON(object):
         self.led = gpiozero.LED(pin_led)
         self.points_per_click = points
 
-start_button = BUTTON(0, 21, 12, 0)
+start_button = BUTTON(0, 21, 12, 10)

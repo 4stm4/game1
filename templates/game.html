@@ -39,7 +39,9 @@
 function count(){
 setInterval(function(){
   if (s>1){
-  s-=1;}else{s = '0'; document.location.replace("/game_over");}
+  s-=1;
+  if (s == 50){PostGameEnd();}
+}else{s = '0'; document.location.replace("/game_over");}
   document.getElementById("sum").children[0].innerHTML=s;
 },1000)
 

@@ -1,3 +1,4 @@
+""" Игра для батутной арены"""
 import cv2, time, os, datetime, pygame, random, pysnooper
 from db import SQL
 from pygame import mixer
@@ -69,8 +70,7 @@ def index():
 def do_photo(name, path):
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
-    
-        #for i in range(5): camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
+        for i in range(2): camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным 
         ret, frame = camera.read() # Делаем снимок 
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
@@ -127,6 +127,7 @@ def start_button_work():
 
 def buttons_work(): 
     global game_points, game_phase
+    start_button_num = len(butttons)
     last_two = []
     while True:
         time.sleep(0.2)
@@ -142,24 +143,37 @@ def buttons_work():
             if game_phase ==2:
                 sel_but = -1
                 while True:
-                    sel_but = random.randint(0,len(butttons)-1)
+                    sel_but = random.randint(0,len(butttons))
                     if not sel_but in last_two:
                         break
                 last_two.append(sel_but)
                 if len(last_two)>2:
                     last_two.pop(0)
-                butttons[sel_but].led.on()
+                if sel_but == start_button_num:
+                    start_button.led.on()
+                else:
+                    butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:
-                    if  butttons[sel_but].sensor.is_active:
-                        game_points += butttons[sel_but].points_per_click
-                        butttons[sel_but].led.off()
-                        break
+                    if sel_but == start_button_num:
+                        if start_button.sensor.is_active:
+                            game_points += start_button.points_per_click
+                            start_button.led.off()
+                            break
+                    else:       
+                        if  butttons[sel_but].sensor.is_active:
+                            game_points += butttons[sel_but].points_per_click
+                            butttons[sel_but].led.off()
+                            break
                     time_cnt += 1
                     time.sleep(0.1)
                     if time_cnt >29:
                         butttons[sel_but].led.off()
                         break
+
+@app.route('/end_music', methods=['POST'])
+def end_music():
+    play_music('static/music/end_game.mp3')
 
 if __name__ == '__main__':
     for number in range( len(buttons_specs)):

@@ -1,14 +1,19 @@
 """ Игра для батутной арены"""
+import pysnooper
 import time
 import os
 import random
+from webbrowser import open_new
 from threading import Thread
 import cv2
 from pygame import mixer
 from flask import Flask, render_template, send_from_directory
 from db import SQL
 from buttons import butttons, start_button, buttons_specs, BUTTON
+from loguru import logger
 
+
+logger.add('game1.log', format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
 
 APP = Flask(__name__)
 #app.config['DEBUG'] = True
@@ -83,11 +88,14 @@ def index():
         )
     return render_template('history.html', rating=winners_list)
 
+@pysnooper.snoop()
 def do_photo(name, path):
     """Метод делает фотографию
     """
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
+        camera.set(3, 640)
+        camera.set(4, 480)
         camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
         ret, frame = camera.read() # Делаем снимок
         #frame = frame[300, 150] обрезать фото
@@ -174,18 +182,19 @@ def buttons_work():
                 sel_but = -1
                 while True:
                     sel_but = random.randint(0,len(butttons))
-                    if not sel_but in last_two:
-                        break
+                    break
+#                    if not sel_but in last_two:
+#                        break
                 last_two.append(sel_but)
                 if len(last_two)>2:
                     last_two.pop(0)
-                if sel_but == 0:
+                if sel_but == start_button_num:
                     start_button.led.on()
                 else:
                     butttons[sel_but].led.on()
                 time_cnt = 0
                 while True:
-                    if sel_but == 0:
+                    if sel_but == start_button_num:
                         if start_button.sensor.is_active:
                             GAME_POINTS += start_button.points_per_click
                             start_button.led.off()
@@ -198,7 +207,10 @@ def buttons_work():
                     time_cnt += 1
                     time.sleep(0.1)
                     if time_cnt >29:
-                        butttons[sel_but].led.off()
+                        if sel_but == start_button_num:
+                            start_button.led.off()
+                        else:
+                            butttons[sel_but].led.off()
                         break
 
 @APP.route('/end_music', methods=['POST'])
@@ -206,12 +218,24 @@ def end_music():
     """Метод проигрывает музыку об окончании игры
     """
     play_music('static/music/end_game.mp3')
+    return ''
+
+def start_browser():
+    time.sleep(10)
+    try:
+        os.system('/bin/sh /home/pi/startchrom.sh')
+    except Exception as err:
+        logger.error('error:{}'.format(err))
+    open_new('127.0.0.1')
+    return ''
 
 if __name__ == '__main__':
-    for number in range( len(buttons_specs)):
+    for number in range(len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
     st_work = Thread(target=start_button_work)
     st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
+    start_chromium = Thread(target=start_browser)
+    start_chromium.start()
     APP.run(host='127.0.0.1', port=8080)

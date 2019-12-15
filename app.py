@@ -1,5 +1,4 @@
 """ Игра для батутной арены"""
-import pysnooper
 import time
 import os
 import random
@@ -10,10 +9,6 @@ from pygame import mixer
 from flask import Flask, render_template, send_from_directory
 from db import SQL
 from buttons import butttons, start_button, buttons_specs, BUTTON
-from loguru import logger
-
-
-logger.add('game1.log', format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
 
 APP = Flask(__name__)
 #app.config['DEBUG'] = True
@@ -88,7 +83,6 @@ def index():
         )
     return render_template('history.html', rating=winners_list)
 
-@pysnooper.snoop()
 def do_photo(name, path):
     """Метод делает фотографию
     """
@@ -148,7 +142,6 @@ def get_game_points():
     """
     global GAME_POINTS
     return str(GAME_POINTS)
-
 
 def start_button_work():
     """Метод работы стартовой кнопки
@@ -220,15 +213,6 @@ def end_music():
     play_music('static/music/end_game.mp3')
     return ''
 
-def start_browser():
-    time.sleep(10)
-    try:
-        os.system('/bin/sh /home/pi/startchrom.sh')
-    except Exception as err:
-        logger.error('error:{}'.format(err))
-    open_new('127.0.0.1')
-    return ''
-
 if __name__ == '__main__':
     for number in range(len(buttons_specs)):
         butttons.append(BUTTON(number, *buttons_specs[number]))
@@ -236,6 +220,4 @@ if __name__ == '__main__':
     st_work.start()
     ob_work = Thread(target=buttons_work)
     ob_work.start()
-    start_chromium = Thread(target=start_browser)
-    start_chromium.start()
     APP.run(host='127.0.0.1', port=8080)

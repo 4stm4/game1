@@ -188,12 +188,14 @@ def buttons_work():
                 time_cnt = 0
                 while True:
                     if sel_but == start_button_num:
-                        if start_button.sensor.is_active:
+                        if start_button.sensor.is_active:                            
+                            play_music('static/music/button.mp3')
                             GAME_POINTS += start_button.points_per_click
                             start_button.led.off()
                             break
                     else:       
-                        if  butttons[sel_but].sensor.is_active:
+                        if  butttons[sel_but].sensor.is_active:                            
+                            play_music('static/music/button.mp3')
                             GAME_POINTS += butttons[sel_but].points_per_click
                             butttons[sel_but].led.off()
                             break

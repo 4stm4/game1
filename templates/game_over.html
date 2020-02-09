@@ -1,43 +1,56 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Игра</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-</head>
+<!DOCTYPE html>
+<html lang="ru">
 
-<body>
-    <div class="flex-container">
-        <div class="header"><h1>Ваш результат</h1></div>
-    </div>
-    <div class="flex-container">
-        <div class="starting">
-            <div class="img-start" style="background-image: url({{foto}})">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Описание">
+        <title>Заголовок</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
+    </head>
+
+    <body>
+        <div class="container screen-4">
+            <div class="block player">
+                <div class="line">
+                    <div class="result">ваш результат:</div>
+                </div>
+                <div class="line">
+                    <div class="row">
+                        <div class="photo" id="photo_1">
+                            <img src="url({{foto}})" class="photo_img" alt="фото">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="time-score-title">очки</div>
+                            <div class="time-score" id="starttime">{{points}}</div>
+                            <div class="time-score-title">осталось <br>времени</div>
+                            <div class="time-score rating" id="score"><p></p></div>
+                        </div>
+
+                        <div class="col">
+                            <div class="message" id="message"></div>
+                            <div class="error" id="error"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="starting">
-            <div class="header"><h2>Очки</h2></div>
-            <div class="header"><h1>{{points}}</h1></div>
-            <div class="header"><h2>Осталось времени</h2></div>
-            <div class="header" id = "sum"><h1></h1></div>
-        </div>
-    </div>
-</body>
-<script>
+    </body>
+    <script>
         var s = 10;
     function count(){
     setInterval(function(){
       if (s>1){
       s-=1;}else{s = '0'; document.location.replace("/");}
-      document.getElementById("sum").children[0].innerHTML=s;
+      document.getElementById("score").children[0].innerHTML=s;
     },1000)
     
     }
         count()  
     </script>
-</html>    
+</html>

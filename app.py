@@ -2,22 +2,20 @@
 import time
 import os
 import random
-from webbrowser import open_new
 from threading import Thread
 import cv2
 from pygame import mixer
 from flask import Flask, render_template, send_from_directory
 from db import SQL
 from buttons import butttons, start_button, buttons_specs, BUTTON
+from config import led_delay, game_time, result_time, start_sound, end_sound, press_sound, press_delay
 
 APP = Flask(__name__)
-#app.config['DEBUG'] = True
 APP.config.from_pyfile('config.ini')
 GAME_PHASE = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - результаты
 ACTIVE_BUTTON = -1
 GAME_POINTS = 0
 GAMER_ID = -1
-
 
 @APP.route('/photo/<filename>')
 def photo(filename):
@@ -52,8 +50,8 @@ def game_over():
     GAME_PHASE = 3
     SQL('update', 'update_points', (GAME_POINTS, GAMER_ID,))
     for button in butttons:
-        button.led.blink()
-    start_button.led.blink()
+        button.led.on()
+    start_button.led.on()
     return render_template('game_over.html', points=GAME_POINTS,
                            foto='/photo/{}.png'.format(GAMER_ID))
 
@@ -67,7 +65,7 @@ def index():
     GAMER_ID = -1
     for button in butttons:
         button.led.on()
-    start_button.led.blink()
+    start_button.led.on()
     winners_list = []
     winners = SQL('select_all', 'select_winners')
     j = 0
@@ -88,8 +86,6 @@ def do_photo(name, path):
     """
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
-        camera.set(3, 640)
-        camera.set(4, 480)
         camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
         ret, frame = camera.read() # Делаем снимок
         #frame = frame[300, 150] обрезать фото
@@ -123,7 +119,7 @@ def start_game():
         GAMER_ID = SQL('insert', 'insert_history')
         photo_name = '{}.png'.format(GAMER_ID)
         do_photo(photo_name, APP.root_path)
-        thread_music = Thread(target=play_music, args = ('static/music/start_game.mp3',))
+        thread_music = Thread(target=play_music, args = (start_sound,))
         thread_music.start()
 
         SQL('update', 'update_history',( photo_name, GAMER_ID,))
@@ -165,9 +161,9 @@ def buttons_work():
         if GAME_PHASE == 0:
             for i in butttons:
                 if i.sensor.is_active:
-                    play_music('static/music/button.mp3')
+                    play_music(press_sound)
                     butttons[i.number].led.off()
-                    time.sleep(3)
+                    time.sleep(led_delay)
                     butttons[i.number].led.on()
                     continue
         else:
@@ -176,8 +172,8 @@ def buttons_work():
                 while True:
                     sel_but = random.randint(0,len(butttons))
                     break
-#                    if not sel_but in last_two:
-#                        break
+                    if not sel_but in last_two:
+                        break
                 last_two.append(sel_but)
                 if len(last_two)>2:
                     last_two.pop(0)
@@ -188,13 +184,13 @@ def buttons_work():
                 time_cnt = 0
                 while True:
                     if sel_but == start_button_num:
-                        if start_button.sensor.is_active:                            
+                        if start_button.sensor.is_active:
                             play_music('static/music/button.mp3')
                             GAME_POINTS += start_button.points_per_click
                             start_button.led.off()
                             break
                     else:       
-                        if  butttons[sel_but].sensor.is_active:                            
+                        if  butttons[sel_but].sensor.is_active:
                             play_music('static/music/button.mp3')
                             GAME_POINTS += butttons[sel_but].points_per_click
                             butttons[sel_but].led.off()
@@ -212,7 +208,7 @@ def buttons_work():
 def end_music():
     """Метод проигрывает музыку об окончании игры
     """
-    play_music('static/music/end_game.mp3')
+    play_music(end_sound)
     return ''
 
 if __name__ == '__main__':

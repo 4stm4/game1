@@ -1,36 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-    <title>Игра</title>
-</head>
-<body>
-    <div class="flex-container">
-        <div class="header"><h1>Рейтинг</h1></div>
-    </div>
-    <div class="flex-container">
-    {% for item in rating %}
-        <div class="rating">
-            <h1>Место: {{item["num"]}}</h1>
-            <div class="img-rating" style="background-image: url({{item["foto"] }})">
+<html lang="ru">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Описание">
+        <title>Заголовок</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <div class="container screen-1">
+            <div class="block">
+                <div class="row header">
+                    <div class="place">рейтинг</div>
+                </div>
+
+                <div class="rows">
+                    {% for item in rating %}
+                    <div class="row">
+                        <div class="place" id="place_1">место {{item["num"]}}</div>
+                        <div class="photo" id="photo_1">
+                            <img src="url({{item["foto"] }})" class="photo_img" alt="фото">
+                        </div>
+                        <div class="score_header" id="score_header_1">очки:</div>
+                        <div class="score" id="score_1">{{item["rslt"]}}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
             </div>
-            <h1>Очки:</h1>
-            <h1>{{item["rslt"]}} </h1>
         </div>
-    {% endfor %}
-    </div>
-</body>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script>
-    var timer = setInterval( GetGamePhase, 1000);
-</script>
+    </body>
+    <script>
+        var timer = setInterval( GetGamePhase, 1000);
+    </script>
 </html>

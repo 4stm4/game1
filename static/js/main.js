@@ -52,7 +52,7 @@ function GetGamePoints() {
         type: "POST",
         url: "/get_game_points",
         success: function(result) {
-            document.getElementById("points").children[0].innerHTML=result;
+            document.getElementById("score").children[0].innerHTML=result;
         }
     });
 }

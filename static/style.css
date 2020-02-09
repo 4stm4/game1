@@ -101,7 +101,7 @@ table {
 }
 
 .header .place, .header .name, .header .score {
-	font-size: 46px;
+	font-size: 68px;
 	color: #65355f;
 	text-transform: lowercase;
 }

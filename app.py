@@ -16,7 +16,7 @@ GAME_PHASE = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - резу
 ACTIVE_BUTTON = -1
 GAME_POINTS = 0
 GAMER_ID = -1
-camera = cv2.VideoCapture(0) # Включаем первую камеру
+#camera = cv2.VideoCapture(0) # Включаем первую камеру
 
 @APP.route('/photo/<filename>')
 def photo(filename):
@@ -60,8 +60,8 @@ def game_over():
 def index():
     """Фаза ожидания начала игры
     """
-    global GAME_PHASE, GAME_POINTS, GAMER_ID, camera
-    camera = cv2.VideoCapture(0) # Включаем первую камеру
+    global GAME_PHASE, GAME_POINTS, GAMER_ID#, camera
+    #camera = cv2.VideoCapture(0) # Включаем первую камеру
     GAME_PHASE = 0
     GAME_POINTS = 0
     GAMER_ID = -1
@@ -88,8 +88,9 @@ def do_photo(name, path):
     """
     global camera
     try:
-#        camera = cv2.VideoCapture(0) # Включаем первую камеру
-#        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
+        camera = cv2.VideoCapture(0) # Включаем первую камеру
+        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
+        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
         ret, frame = camera.read() # Делаем снимок
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
@@ -97,7 +98,7 @@ def do_photo(name, path):
         frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'), name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
-        #camera.release() # Отключаем камеру
+        camera.release() # Отключаем камеру
     except Exception as err:
         return 'ERROR = {}'.format(err)
     return ''
@@ -113,8 +114,8 @@ def play_music(mp3_file: str):
 def start_game():
     """Фаза начала игры
     """
-    global GAME_PHASE, GAMER_ID, camera
-    camera.release() # Отключаем камеру
+    global GAME_PHASE, GAMER_ID#, camera
+    #camera.release() # Отключаем камеру
     if GAME_PHASE == 1:
         GAME_PHASE = 2
         for button in butttons:

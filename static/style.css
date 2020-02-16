@@ -236,8 +236,8 @@ table {
 .screen-3 .photo .photo_img,
 .screen-4 .photo .photo_img {
 	width: 100%;
-	height: auto;
-    object-fit: fill;
+	height: 100%;
+    object-fit: cover;
 }
 
 .screen-2 .block.player,

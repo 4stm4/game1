@@ -60,7 +60,8 @@ def game_over():
 def index():
     """Фаза ожидания начала игры
     """
-    global GAME_PHASE, GAME_POINTS, GAMER_ID
+    global GAME_PHASE, GAME_POINTS, GAMER_ID, camera
+    camera = cv2.VideoCapture(0) # Включаем первую камеру
     GAME_PHASE = 0
     GAME_POINTS = 0
     GAMER_ID = -1
@@ -85,6 +86,7 @@ def index():
 def do_photo(name, path):
     """Метод делает фотографию
     """
+    global camera
     try:
 #        camera = cv2.VideoCapture(0) # Включаем первую камеру
 #        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным

@@ -113,7 +113,8 @@ def play_music(mp3_file: str):
 def start_game():
     """Фаза начала игры
     """
-    global GAME_PHASE, GAMER_ID
+    global GAME_PHASE, GAMER_ID, camera
+    camera.release() # Отключаем камеру
     if GAME_PHASE == 1:
         GAME_PHASE = 2
         for button in butttons:

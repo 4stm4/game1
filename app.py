@@ -16,6 +16,7 @@ GAME_PHASE = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - резу
 ACTIVE_BUTTON = -1
 GAME_POINTS = 0
 GAMER_ID = -1
+camera = cv2.VideoCapture(0) # Включаем первую камеру
 
 @APP.route('/photo/<filename>')
 def photo(filename):
@@ -85,8 +86,8 @@ def do_photo(name, path):
     """Метод делает фотографию
     """
     try:
-        camera = cv2.VideoCapture(0) # Включаем первую камеру
-        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
+#        camera = cv2.VideoCapture(0) # Включаем первую камеру
+#        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
         ret, frame = camera.read() # Делаем снимок
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE
@@ -94,7 +95,7 @@ def do_photo(name, path):
         frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
         photo_file = '{}/{}'.format(os.path.join(path, 'static/photo'), name)
         cv2.imwrite(photo_file, frame) # Записываем в файл
-        camera.release() # Отключаем камеру
+        #camera.release() # Отключаем камеру
     except Exception as err:
         return 'ERROR = {}'.format(err)
     return ''

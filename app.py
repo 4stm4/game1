@@ -90,7 +90,7 @@ def do_photo(name, path):
     try:
         camera = cv2.VideoCapture(0) # Включаем первую камеру
         camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
-        camera.read() # "Прогреваем" камеру, чтобы снимок не был тёмным
+        time.sleep(0.5)
         ret, frame = camera.read() # Делаем снимок
         #frame = frame[300, 150] обрезать фото
         #cv2.ROTATE_90_CLOCKWISE

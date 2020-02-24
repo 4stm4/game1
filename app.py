@@ -66,7 +66,7 @@ def index():
     GAME_POINTS = 0
     GAMER_ID = -1
     for button in butttons:
-        button.led.on()
+        button.led.off()
     start_button.led.on()
     winners_list = []
     winners = SQL('select_all', 'select_winners')

@@ -4,12 +4,12 @@ import gpiozero
 # pin_sensor, pin_led, points : int, start
 buttons_specs = [
     [20, 16, 20],
-    [7, 8, 15],
+    [27, 8, 15],
     [25, 24, 10],
     [18, 15, 25],
     [26, 19, 10],
     [13, 6, 15],
-    [5, 11, 20]
+    [22, 11, 20]
 ]
 butttons = []
 

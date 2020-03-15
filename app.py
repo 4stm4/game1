@@ -1,4 +1,5 @@
 """ Игра для батутной арены"""
+import pysnooper
 import time
 import os
 import random
@@ -16,6 +17,7 @@ GAME_PHASE = 0  # 0 - ожидание, 1 - старт, 2 игра, 3 - резу
 ACTIVE_BUTTON = -1
 GAME_POINTS = 0
 GAMER_ID = -1
+GAME10 = False
 #camera = cv2.VideoCapture(0) # Включаем первую камеру
 
 @APP.route('/photo/<filename>')
@@ -60,8 +62,7 @@ def game_over():
 def index():
     """Фаза ожидания начала игры
     """
-    global GAME_PHASE, GAME_POINTS, GAMER_ID#, camera
-    #camera = cv2.VideoCapture(0) # Включаем первую камеру
+    global GAME_PHASE, GAME_POINTS, GAMER_ID
     GAME_PHASE = 0
     GAME_POINTS = 0
     GAMER_ID = -1
@@ -118,6 +119,7 @@ def start_game():
     #camera.release() # Отключаем камеру
     if GAME_PHASE == 1:
         GAME_PHASE = 2
+        GAME10 = False
         for button in butttons:
             button.led.on()
         start_button.led.on()
@@ -152,54 +154,67 @@ def start_button_work():
         time.sleep(0.2)
         if GAME_PHASE == 0:
             if start_button.sensor.is_active:
+                play_music('static/music/button.mp3')
                 GAME_PHASE = 1
                 continue
 
 def buttons_work(): 
     """Метод работы игровых кнопок
     """
-    global GAME_POINTS, GAME_PHASE
+    global GAME_POINTS, GAME_PHASE, GAME10
     start_button_num = len(butttons)
-    last_two = []
+    last_two = [0,1]
     while True:
-        time.sleep(0.2)
+        time.sleep(0.04)
         if GAME_PHASE == 0:
             for i in butttons:
                 if i.sensor.is_active:
                     play_music(press_sound)
-                    butttons[i.number].led.off()
-                    time.sleep(led_delay)
                     butttons[i.number].led.on()
+                    time.sleep(led_delay)
+                    butttons[i.number].led.off()
                     continue
         else:
             if GAME_PHASE == 2:
                 sel_but = -1
                 while True:
                     sel_but = random.randint(0,len(butttons))
-                    break
                     if not sel_but in last_two:
                         break
                 last_two.append(sel_but)
-                if len(last_two)>2:
-                    last_two.pop(0)
+                last_two.pop(0)
                 if sel_but == start_button_num:
                     start_button.led.on()
                 else:
                     butttons[sel_but].led.on()
                 time_cnt = 0
+                sign_cnt = 0
                 while True:
                     if sel_but == start_button_num:
                         if start_button.sensor.is_active:
-                            play_music('static/music/button.mp3')
-                            GAME_POINTS += start_button.points_per_click
-                            start_button.led.off()
-                            break
-                    else:       
+                            sign_cnt += 1
+                            if sign_cnt > 3:
+                                if not GAME10:
+                                    music_button = Thread(target = play_music, args = ('static/music/button.mp3',))
+                                    music_button.start()
+                                GAME_POINTS += start_button.points_per_click
+                                start_button.led.off()
+                                break
+                            time.sleep(0.05)
+                            continue
+                    else:
                         if  butttons[sel_but].sensor.is_active:
-                            play_music('static/music/button.mp3')
-                            GAME_POINTS += butttons[sel_but].points_per_click
-                            butttons[sel_but].led.off()
-                            break
+                            sign_cnt += 1
+                            if sign_cnt > 3:
+                                if not GAME10:
+                                    music_button = Thread(target = play_music, args = ('static/music/button.mp3',))
+                                    music_button.start()
+                                GAME_POINTS += butttons[sel_but].points_per_click
+                                butttons[sel_but].led.off()
+                                break
+                            time.sleep(0.05)
+                            continue
+                    sign_cnt = 0
                     time_cnt += 1
                     time.sleep(0.1)
                     if time_cnt >29:
@@ -213,7 +228,10 @@ def buttons_work():
 def end_music():
     """Метод проигрывает музыку об окончании игры
     """
-    play_music(end_sound)
+    global GAME10
+    GAME10 = True
+    thread_music2 = Thread(target=play_music, args = (end_sound,))
+    thread_music2.start()
     return ''
 
 if __name__ == '__main__':
